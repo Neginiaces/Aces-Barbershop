@@ -1,0 +1,15 @@
+{
+  "name": "aces-barbershop",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Premium static site for Aces Barbershop by Menace — Keswick, Ontario.",
+  "scripts": {
+    "optimize:images": "node scripts/optimize-images.mjs",
+    "deploy": "vercel --prod"
+  },
+  "devDependencies": {
+    "potrace": "^2.1.8",
+    "sharp": "^0.35.3",
+    "vercel": "^41.6.0"
+  }
+}
