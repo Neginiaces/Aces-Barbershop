@@ -84,8 +84,7 @@ html {
     transition-duration: 0.01ms !important;
   }
 
-  .hero-animate,
-  .hero-logo-animate {
+  .hero-animate {
     opacity: 1 !important;
     transform: none !important;
     filter: none !important;
@@ -671,6 +670,7 @@ address {
   margin-inline: auto;
   object-fit: contain;
   aspect-ratio: 877 / 521;
+  opacity: 1;
 }
 
 @media (min-width: 48rem) {
@@ -729,7 +729,6 @@ address {
 }
 
 /* Motion + GSAP take over once JS is ready */
-.hero-logo-animate,
 .hero-animate {
   opacity: 0;
 }
