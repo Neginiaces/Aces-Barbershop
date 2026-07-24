@@ -13,10 +13,10 @@
   --gold-dark: #8a6f2e;
   --black: #1d1d1f;
   --ink: #1d1d1f;
-  --army: #2d5630;
-  --army-light: #3c6b3f;
-  --army-mid: #4a7d4d;
-  --army-dark: #1e3c21;
+  --army: #09461f;
+  --army-light: #2f6a45;
+  --army-mid: #1a5c31;
+  --army-dark: #062e14;
   --promo-height: 2.125rem;
 
   --bg-primary: var(--white);
@@ -27,11 +27,10 @@
   --text-muted: rgba(29, 29, 31, 0.55);
   --accent: var(--gold);
   --accent-hover: var(--gold-dark);
-  --border: rgba(29, 29, 31, 0.08);
-  --border-strong: rgba(168, 137, 63, 0.35);
-
+  --border: rgba(9, 70, 31, 0.12);
+  --border-strong: rgba(9, 70, 31, 0.32);
+  --glass-border: rgba(9, 70, 31, 0.14);
   --glass-bg: rgba(255, 255, 255, 0.78);
-  --glass-border: rgba(29, 29, 31, 0.06);
   --glass-blur: 20px;
 
   --font-display: "Cormorant Garamond", Georgia, "Times New Roman", serif;
@@ -841,7 +840,7 @@ address {
 
 .service-card:hover {
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.06);
-  border-color: rgba(168, 137, 63, 0.22);
+  border-color: rgba(9, 70, 31, 0.28);
 }
 
 .service-card h3 {
@@ -973,6 +972,7 @@ address {
 
 .team-card:hover {
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.06);
+  border-color: rgba(9, 70, 31, 0.28);
 }
 
 .team-photo {
@@ -1059,6 +1059,7 @@ address {
 
 .testimonial:hover {
   box-shadow: 0 18px 40px rgba(0, 0, 0, 0.05);
+  border-color: rgba(9, 70, 31, 0.24);
 }
 
 .testimonial p {
