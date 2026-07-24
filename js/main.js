@@ -255,8 +255,8 @@ function initHeroCaption() {
   if (heroLogo) {
     heroCaption.fromTo(
       heroLogo,
-      { opacity: 0, y: 22, immediateRender: false },
-      { opacity: 1, y: 0, duration: 1 },
+      { y: 22, immediateRender: false },
+      { y: 0, duration: 1 },
       0.12
     );
   }
