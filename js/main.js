@@ -15,17 +15,23 @@ const easeOut = [0.16, 1, 0.3, 1];
 
 document.documentElement.classList.add('js-ready');
 
+let heroMotionCtx = null;
+
 function revealHeroCaption() {
-  document.querySelectorAll('.hero-logo, .hero-memorial, .hero-actions .btn').forEach((el) => {
+  document.querySelectorAll('[data-hero-animate], .hero-heading, .hero-subtitle, .hero-actions .btn').forEach((el) => {
     el.style.opacity = '1';
     el.style.transform = 'none';
-    el.style.filter = 'none';
     el.style.visibility = 'visible';
   });
+  document.querySelector('.hero')?.classList.add('hero-ready');
 }
 
-/* Failsafe: never leave hero content invisible if CDN/modules fail */
-window.setTimeout(revealHeroCaption, 1200);
+/* Failsafe only if GSAP hero timeline never completes */
+window.setTimeout(() => {
+  if (!document.querySelector('.hero')?.classList.contains('hero-ready')) {
+    revealHeroCaption();
+  }
+}, 3000);
 
 /* ------------------------------------------------------------------
    Utilities
@@ -240,44 +246,35 @@ if (prefersReducedMotion) {
   }
 }
 
-function initHeroCaption() {
-  const heroLogo = document.querySelector('.hero-logo');
-  const heroMemorial = document.querySelector('.hero-memorial');
-  const heroBtns = document.querySelectorAll('.hero-actions .btn');
+function initHeroEntrance() {
+  const hero = document.querySelector('.hero');
+  if (!hero) return null;
 
-  if (!heroLogo && !heroMemorial && !heroBtns.length) return;
+  return gsap.context(() => {
+    const heading = hero.querySelector('.hero-heading');
+    const subtitle = hero.querySelector('.hero-subtitle');
+    const ctas = hero.querySelectorAll('.hero-cta [data-hero-animate]');
+    const items = [heading, subtitle, ...ctas].filter(Boolean);
 
-  const heroCaption = gsap.timeline({
-    defaults: { ease: 'power2.out' },
-    onComplete: revealHeroCaption,
-  });
+    if (!items.length) return;
 
-  if (heroLogo) {
-    heroCaption.fromTo(
-      heroLogo,
-      { y: 22, immediateRender: false },
-      { y: 0, duration: 1 },
-      0.12
-    );
-  }
+    if (prefersReducedMotion) {
+      gsap.set(items, { autoAlpha: 1, y: 0, clearProps: 'all' });
+      hero.classList.add('hero-ready');
+      return;
+    }
 
-  if (heroMemorial) {
-    heroCaption.fromTo(
-      heroMemorial,
-      { opacity: 0, y: 16, immediateRender: false },
-      { opacity: 1, y: 0, duration: 0.95 },
-      0.42
-    );
-  }
+    gsap.set(items, { autoAlpha: 0, y: 32 });
 
-  if (heroBtns.length) {
-    heroCaption.fromTo(
-      heroBtns,
-      { opacity: 0, y: 14, immediateRender: false },
-      { opacity: 1, y: 0, duration: 0.85, stagger: 0.1 },
-      0.72
-    );
-  }
+    gsap
+      .timeline({
+        defaults: { ease: 'power3.out' },
+        onComplete: () => hero.classList.add('hero-ready'),
+      })
+      .to(heading, { autoAlpha: 1, y: 0, duration: 1.05 }, 0.12)
+      .to(subtitle, { autoAlpha: 1, y: 0, duration: 0.95 }, 0.38)
+      .to(ctas, { autoAlpha: 1, y: 0, duration: 0.85, stagger: 0.1 }, 0.62);
+  }, hero);
 }
 
 function initRichMotion() {
@@ -303,8 +300,8 @@ function initRichMotion() {
     });
   }
 
-  /* ---- Hero caption: logo → memorial → CTAs ---- */
-  initHeroCaption();
+  /* ---- Hero entrance (GSAP context) ---- */
+  heroMotionCtx = initHeroEntrance();
 
   /* ---- Section headers ---- */
   gsap.utils.toArray('.section-header').forEach((headerEl) => {
@@ -529,8 +526,8 @@ function initRichMotion() {
     });
   });
 
-  /* ---- Button press micro-feedback ---- */
-  document.querySelectorAll('.btn').forEach((btn) => {
+  /* ---- Button press micro-feedback (skip hero CTAs — GSAP owns their entrance) ---- */
+  document.querySelectorAll('.btn:not([data-hero-animate])').forEach((btn) => {
     btn.addEventListener('pointerdown', () => {
       animate(btn, { scale: 0.97 }, { duration: 0.12 });
     });
@@ -544,3 +541,7 @@ function initRichMotion() {
 
   window.addEventListener('load', () => ScrollTrigger.refresh());
 }
+
+window.addEventListener('pagehide', () => {
+  heroMotionCtx?.revert();
+});
