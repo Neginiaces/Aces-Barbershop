@@ -86,7 +86,7 @@ html {
   }
 
   .hero-animate,
-  .hero-bg-animate {
+  .hero-logo-animate {
     opacity: 1 !important;
     transform: none !important;
     filter: none !important;
@@ -640,73 +640,44 @@ address {
 /* Hero */
 .hero {
   position: relative;
-  min-height: min(92svh, 52rem);
+  min-height: min(84svh, 48rem);
   display: flex;
   align-items: center;
   justify-content: center;
   padding-top: calc(var(--promo-height) + var(--header-height));
   padding-bottom: var(--space-xl);
-  overflow: hidden;
-  color: var(--white);
-}
-
-.hero-media {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  background:
-    linear-gradient(165deg, #eef0f2 0%, #e3e7ea 38%, #314f35 78%, var(--army-dark) 100%);
-}
-
-.hero-overlay {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.08) 0%,
-      rgba(29, 29, 31, 0.08) 55%,
-      rgba(29, 29, 31, 0.55) 100%
-    );
 }
 
 .hero-content {
-  position: relative;
-  z-index: 1;
   text-align: center;
-  width: 100%;
+  padding-block: clamp(2.25rem, 7vw, 4.5rem) clamp(2rem, 6vw, 3.75rem);
   max-width: 42rem;
-  padding-block: clamp(2rem, 6vw, 3.5rem);
 }
 
 .hero-title {
-  margin: 0 auto 2.25rem;
-  max-width: min(92vw, 34rem);
+  margin: 0 auto 2.75rem;
+  max-width: min(88vw, 22rem);
 }
 
 .hero-logo {
   display: block;
   width: 100%;
   height: auto;
+  max-height: none;
   margin-inline: auto;
   object-fit: contain;
-  filter: drop-shadow(0 0.85rem 2rem rgba(0, 0, 0, 0.28));
-}
-
-@media (max-width: 47.9375rem) {
-  .hero {
-    min-height: min(88svh, 44rem);
-  }
-
-  .hero-title {
-    max-width: min(88vw, 22rem);
-    margin-bottom: 1.75rem;
-  }
+  aspect-ratio: 877 / 521;
 }
 
 @media (min-width: 48rem) {
   .hero-title {
-    max-width: 36rem;
+    max-width: 26rem;
+  }
+}
+
+@media (min-width: 64rem) {
+  .hero-title {
+    max-width: 28rem;
   }
 }
 
@@ -735,7 +706,7 @@ address {
 }
 
 /* Motion + GSAP take over once JS is ready */
-.hero-bg-animate,
+.hero-logo-animate,
 .hero-animate {
   opacity: 0;
 }

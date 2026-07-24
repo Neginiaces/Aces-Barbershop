@@ -17,7 +17,7 @@ document.documentElement.classList.add('js-ready');
 
 /* Failsafe: never leave hero/content invisible if CDN/modules fail */
 window.setTimeout(() => {
-  document.querySelectorAll('.hero-bg-animate, .hero-animate').forEach((el) => {
+  document.querySelectorAll('.hero-logo-animate, .hero-animate').forEach((el) => {
     if (getComputedStyle(el).opacity === '0') {
       el.style.opacity = '1';
       el.style.transform = 'none';
@@ -225,7 +225,7 @@ if (contactForm) {
    Reduced motion: show everything, skip cinematic motion
    ------------------------------------------------------------------ */
 if (prefersReducedMotion) {
-  document.querySelectorAll('.hero-bg-animate, .hero-animate, .reveal').forEach((el) => {
+  document.querySelectorAll('.hero-logo-animate, .hero-animate, .reveal').forEach((el) => {
     el.style.opacity = '1';
     el.style.transform = 'none';
     el.style.filter = 'none';
@@ -235,7 +235,7 @@ if (prefersReducedMotion) {
 }
 
 function initRichMotion() {
-  document.querySelectorAll('.hero-bg-animate, .hero-animate').forEach((el) => {
+  document.querySelectorAll('.hero-logo-animate, .hero-animate').forEach((el) => {
     el.style.animation = 'none';
     el.style.opacity = '0';
   });
@@ -263,17 +263,17 @@ function initRichMotion() {
   }
 
   /* ---- Hero logo (Motion) ---- */
-  const heroLogo = document.querySelector('.hero-logo');
-  if (heroLogo) {
+  const logo = document.querySelector('.hero-logo');
+  if (logo) {
     animate(
-      heroLogo,
+      logo,
       {
         opacity: [0, 1],
-        scale: [0.9, 1],
-        y: [28, 0],
-        filter: ['blur(10px)', 'blur(0px)'],
+        scale: [0.88, 1],
+        y: [32, 0],
+        filter: ['blur(12px)', 'blur(0px)'],
       },
-      { duration: 1.25, easing: easeOut, delay: 0.1 }
+      { duration: 1.25, easing: easeOut, delay: 0.12 }
     );
   }
 
