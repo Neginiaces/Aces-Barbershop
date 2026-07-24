@@ -17,7 +17,7 @@
   --army-light: #2f6a45;
   --army-mid: #1a5c31;
   --army-dark: #062e14;
-  --promo-height: 2.125rem;
+  --promo-height: 2.75rem;
 
   --bg-primary: var(--white);
   --bg-secondary: var(--apple-gray);
@@ -88,6 +88,10 @@ html {
     opacity: 1 !important;
     transform: none !important;
     filter: none !important;
+  }
+
+  .promo-banner__slide {
+    transition: none !important;
   }
 }
 
@@ -360,13 +364,44 @@ address {
   color: #fff;
   font-family: var(--font-display);
   font-style: italic;
-  font-size: 0.9375rem;
+  font-size: clamp(0.8125rem, 2.4vw, 0.9375rem);
   letter-spacing: 0.02em;
   text-align: center;
+  overflow: hidden;
 }
 
-.promo-banner p {
+.promo-banner__viewport {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.promo-banner__slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin: 0;
+  padding-inline: clamp(0.75rem, 3vw, 1.5rem);
+  line-height: 1.25;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(6px);
+  pointer-events: none;
+}
+
+.promo-banner__slide.is-active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+@media (min-width: 48rem) {
+  :root {
+    --promo-height: 2.125rem;
+  }
 }
 
 /* Header */
