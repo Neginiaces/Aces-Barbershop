@@ -15,16 +15,17 @@ const easeOut = [0.16, 1, 0.3, 1];
 
 document.documentElement.classList.add('js-ready');
 
-/* Failsafe: never leave hero/content invisible if CDN/modules fail */
-window.setTimeout(() => {
-  document.querySelectorAll('.hero-animate, .hero-caption-animate').forEach((el) => {
-    if (getComputedStyle(el).opacity === '0') {
-      el.style.opacity = '1';
-      el.style.transform = 'none';
-      el.style.filter = 'none';
-    }
+function revealHeroCaption() {
+  document.querySelectorAll('.hero-logo, .hero-memorial, .hero-actions .btn').forEach((el) => {
+    el.style.opacity = '1';
+    el.style.transform = 'none';
+    el.style.filter = 'none';
+    el.style.visibility = 'visible';
   });
-}, 3500);
+}
+
+/* Failsafe: never leave hero content invisible if CDN/modules fail */
+window.setTimeout(revealHeroCaption, 1200);
 
 /* ------------------------------------------------------------------
    Utilities
@@ -225,20 +226,61 @@ if (contactForm) {
    Reduced motion: show everything, skip cinematic motion
    ------------------------------------------------------------------ */
 if (prefersReducedMotion) {
-  document.querySelectorAll('.hero-animate, .hero-caption-animate, .reveal').forEach((el) => {
+  revealHeroCaption();
+  document.querySelectorAll('.hero-animate, .reveal').forEach((el) => {
     el.style.opacity = '1';
     el.style.transform = 'none';
     el.style.filter = 'none';
   });
 } else {
-  initRichMotion();
+  try {
+    initRichMotion();
+  } catch (error) {
+    revealHeroCaption();
+  }
+}
+
+function initHeroCaption() {
+  const heroLogo = document.querySelector('.hero-logo');
+  const heroMemorial = document.querySelector('.hero-memorial');
+  const heroBtns = document.querySelectorAll('.hero-actions .btn');
+
+  if (!heroLogo && !heroMemorial && !heroBtns.length) return;
+
+  const heroCaption = gsap.timeline({
+    defaults: { ease: 'power2.out' },
+    onComplete: revealHeroCaption,
+  });
+
+  if (heroLogo) {
+    heroCaption.fromTo(
+      heroLogo,
+      { opacity: 0, y: 22, immediateRender: false },
+      { opacity: 1, y: 0, duration: 1 },
+      0.12
+    );
+  }
+
+  if (heroMemorial) {
+    heroCaption.fromTo(
+      heroMemorial,
+      { opacity: 0, y: 16, immediateRender: false },
+      { opacity: 1, y: 0, duration: 0.95 },
+      0.42
+    );
+  }
+
+  if (heroBtns.length) {
+    heroCaption.fromTo(
+      heroBtns,
+      { opacity: 0, y: 14, immediateRender: false },
+      { opacity: 1, y: 0, duration: 0.85, stagger: 0.1 },
+      0.72
+    );
+  }
 }
 
 function initRichMotion() {
-  document.querySelectorAll('.hero-caption-animate').forEach((el) => {
-    el.style.animation = 'none';
-  });
-
   /* ---- Page enter: promo + header ---- */
   gsap.from(['.promo-banner', '.site-header'], {
     y: (i) => (i === 0 ? -40 : -24),
@@ -262,42 +304,7 @@ function initRichMotion() {
   }
 
   /* ---- Hero caption: logo → memorial → CTAs ---- */
-  const heroLogo = document.querySelector('.hero-logo');
-  const heroMemorial = document.querySelector('.hero-memorial');
-  const heroBtns = document.querySelectorAll('.hero-actions .btn');
-
-  if (heroLogo || heroMemorial || heroBtns.length) {
-    const heroCaption = gsap.timeline({
-      defaults: { ease: 'power2.out' },
-    });
-
-    if (heroLogo) {
-      heroCaption.fromTo(
-        heroLogo,
-        { opacity: 0, y: 22 },
-        { opacity: 1, y: 0, duration: 1 },
-        0.12
-      );
-    }
-
-    if (heroMemorial) {
-      heroCaption.fromTo(
-        heroMemorial,
-        { opacity: 0, y: 16 },
-        { opacity: 1, y: 0, duration: 0.95 },
-        0.42
-      );
-    }
-
-    if (heroBtns.length) {
-      heroCaption.fromTo(
-        heroBtns,
-        { opacity: 0, y: 14 },
-        { opacity: 1, y: 0, duration: 0.85, stagger: 0.1 },
-        0.72
-      );
-    }
-  }
+  initHeroCaption();
 
   /* ---- Section headers ---- */
   gsap.utils.toArray('.section-header').forEach((headerEl) => {

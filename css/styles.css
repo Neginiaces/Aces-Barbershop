@@ -84,8 +84,7 @@ html {
     transition-duration: 0.01ms !important;
   }
 
-  .hero-animate,
-  .hero-caption-animate {
+  .hero-animate {
     opacity: 1 !important;
     transform: none !important;
     filter: none !important;
@@ -726,13 +725,6 @@ address {
     flex-direction: row;
     justify-content: center;
   }
-}
-
-/* Motion + GSAP take over once JS is ready */
-.js-ready .hero-logo.hero-caption-animate,
-.js-ready .hero-brand .hero-memorial.hero-caption-animate,
-.js-ready .hero-actions .hero-caption-animate {
-  opacity: 0;
 }
 
 .hero-animate {
