@@ -278,12 +278,14 @@ function initRichMotion() {
   }
 
   const memorial = document.querySelector('.hero-memorial');
-  if (memorial) {
-    animate(
-      memorial,
-      { opacity: [0, 1], y: [12, 0] },
-      { duration: 0.7, easing: easeOut, delay: 0.28 }
-    );
+  if (memorial && !prefersReducedMotion) {
+    gsap.from(memorial, {
+      opacity: 0,
+      y: 10,
+      duration: 0.8,
+      delay: 0.35,
+      ease: 'power2.out',
+    });
   }
 
   const actions = document.querySelector('.hero-actions');

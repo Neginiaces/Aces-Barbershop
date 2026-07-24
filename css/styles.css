@@ -658,7 +658,7 @@ address {
 }
 
 .hero-title {
-  margin: 0 auto 0.625rem;
+  margin: 0 auto 0.75rem;
   max-width: min(88vw, 22rem);
 }
 
@@ -684,7 +684,7 @@ address {
   }
 }
 
-.hero-memorial {
+.hero-brand .hero-memorial {
   margin: 0 auto;
   max-width: 24rem;
   padding: 0;
@@ -692,14 +692,15 @@ address {
   border: none;
   text-align: center;
   font-family: var(--font-script);
-  font-size: clamp(1.2rem, 3.2vw, 1.65rem);
+  font-size: clamp(1.35rem, 3.6vw, 1.75rem);
   font-weight: 400;
-  color: rgba(9, 70, 31, 0.72);
+  color: var(--army);
   line-height: 1.45;
+  opacity: 1;
 }
 
-.hero-memorial span {
-  color: var(--army);
+.hero-brand .hero-memorial span {
+  color: var(--army-dark);
 }
 
 .hero-desc {
