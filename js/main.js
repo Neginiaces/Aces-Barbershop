@@ -277,7 +277,7 @@ function initRichMotion() {
     );
   }
 
-  const memorial = document.querySelector('.memorial');
+  const memorial = document.querySelector('.hero-memorial');
   if (memorial) {
     animate(
       memorial,

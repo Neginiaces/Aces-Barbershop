@@ -653,8 +653,12 @@ address {
   max-width: 42rem;
 }
 
+.hero-brand {
+  margin-bottom: clamp(1.75rem, 4.5vw, 2.5rem);
+}
+
 .hero-title {
-  margin: 0 auto 2.75rem;
+  margin: 0 auto 0.625rem;
   max-width: min(88vw, 22rem);
 }
 
@@ -678,6 +682,24 @@ address {
   .hero-title {
     max-width: 28rem;
   }
+}
+
+.hero-memorial {
+  margin: 0 auto;
+  max-width: 24rem;
+  padding: 0;
+  background: none;
+  border: none;
+  text-align: center;
+  font-family: var(--font-script);
+  font-size: clamp(1.2rem, 3.2vw, 1.65rem);
+  font-weight: 400;
+  color: rgba(9, 70, 31, 0.72);
+  line-height: 1.45;
+}
+
+.hero-memorial span {
+  color: var(--army);
 }
 
 .hero-desc {
@@ -729,18 +751,18 @@ address {
 
 /* Memorial */
 .memorial {
-  margin: 0 auto 1.75rem;
-  max-width: 28rem;
+  margin: 0 auto;
+  max-width: 24rem;
   text-align: center;
   font-family: var(--font-script);
-  font-size: clamp(1.35rem, 3.8vw, 1.85rem);
+  font-size: clamp(1.2rem, 3.2vw, 1.65rem);
   font-weight: 400;
-  color: var(--army);
-  line-height: 1.35;
+  color: rgba(9, 70, 31, 0.72);
+  line-height: 1.45;
 }
 
 .memorial span {
-  color: var(--army-dark);
+  color: var(--army);
 }
 
 /* Stats */
