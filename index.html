@@ -40,7 +40,7 @@
   <link rel="stylesheet" href="css/styles.css">
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
   <link rel="apple-touch-icon" href="assets/brand/aces-logo.png">
-  <link rel="preload" href="assets/brand/aces-logo.png" as="image" fetchpriority="high">
+  <link rel="preload" href="assets/hero/menace-hero.jpg" as="image" fetchpriority="high">
   <link rel="sitemap" type="application/xml" href="/sitemap.xml">
 
   <script type="application/ld+json">
@@ -257,19 +257,23 @@
   <main id="main">
     <!-- Hero -->
     <section class="hero" aria-label="Welcome">
-      <div class="container hero-content">
-        <h1 class="hero-title">
-          <span class="sr-only">Aces Barbershop by Menace — Premium Barbershop in Keswick, Ontario</span>
+      <div class="hero-media">
+        <picture>
+          <source media="(max-width: 47.9375rem)" srcset="assets/hero/menace-hero-mobile.jpg">
           <img
-            class="hero-logo hero-logo-animate"
-            src="assets/brand/aces-logo.png"
-            alt="Aces Barbershop by Menace"
-            width="816"
-            height="1190"
+            class="hero-bg hero-bg-animate"
+            src="assets/hero/menace-hero.jpg"
+            alt="Menace by Aces Barbershop"
+            width="1920"
+            height="1141"
             decoding="async"
             fetchpriority="high"
           >
-        </h1>
+        </picture>
+        <div class="hero-overlay"></div>
+      </div>
+      <div class="container hero-content">
+        <h1 class="sr-only">Aces Barbershop by Menace — Premium Barbershop in Keswick, Ontario</h1>
         <div class="hero-actions hero-animate" style="--delay: 480ms">
           <a href="#team" class="btn btn-gold btn-lg">Book Your Barber</a>
           <a href="#services" class="btn btn-glass btn-lg">View Services</a>
