@@ -22,7 +22,7 @@ const PROMO_CAROUSEL = {
 document.documentElement.classList.add('js-ready');
 
 let heroMotionCtx = null;
-let promoMotionCtx = null;
+let promoCarouselTween = null;
 let promoCarouselTimer = null;
 
 function revealHeroCaption() {
@@ -241,12 +241,14 @@ if (contactForm) {
    ------------------------------------------------------------------ */
 if (prefersReducedMotion) {
   revealHeroCaption();
+  initPromoCarousel();
   document.querySelectorAll('.hero-animate, .reveal').forEach((el) => {
     el.style.opacity = '1';
     el.style.transform = 'none';
     el.style.filter = 'none';
   });
 } else {
+  initPromoCarousel();
   try {
     initRichMotion();
   } catch (error) {
@@ -287,66 +289,70 @@ function initHeroEntrance() {
 
 function initPromoCarousel() {
   const banner = document.querySelector('.promo-banner');
-  if (!banner) return null;
+  if (!banner) return;
 
   const slides = [...banner.querySelectorAll('.promo-banner__slide')];
-  if (slides.length < 2) return null;
+  if (!slides.length) return;
+
+  if (promoCarouselTimer) {
+    window.clearInterval(promoCarouselTimer);
+    promoCarouselTimer = null;
+  }
+  promoCarouselTween?.kill();
+  promoCarouselTween = null;
+
+  slides.forEach((slide) => {
+    slide.style.removeProperty('opacity');
+    slide.style.removeProperty('visibility');
+    slide.style.removeProperty('transform');
+  });
+
+  if (prefersReducedMotion || slides.length < 2) {
+    slides.forEach((slide, i) => {
+      slide.classList.toggle('is-active', i === 0);
+    });
+    return;
+  }
 
   let index = slides.findIndex((slide) => slide.classList.contains('is-active'));
   if (index < 0) index = 0;
 
-  return gsap.context(() => {
-    const showSlide = (slide, visible) => {
-      gsap.set(slide, {
-        autoAlpha: visible ? 1 : 0,
-        y: visible ? 0 : 6,
-      });
-    };
+  slides.forEach((slide, i) => {
+    slide.classList.toggle('is-active', i === index);
+    gsap.set(slide, { autoAlpha: i === index ? 1 : 0, y: i === index ? 0 : 8 });
+  });
 
-    if (prefersReducedMotion) {
-      slides.forEach((slide, i) => {
-        slide.classList.toggle('is-active', i === 0);
-        showSlide(slide, i === 0);
-      });
-      return;
-    }
+  const rotate = () => {
+    const currentSlide = slides[index];
+    const nextIndex = (index + 1) % slides.length;
+    const nextSlide = slides[nextIndex];
 
-    slides.forEach((slide, i) => {
-      slide.classList.toggle('is-active', i === index);
-      showSlide(slide, i === index);
-    });
-
-    const rotate = () => {
-      const currentSlide = slides[index];
-      index = (index + 1) % slides.length;
-      const nextSlide = slides[index];
-
-      gsap
-        .timeline({ defaults: { ease: 'power2.inOut' } })
-        .to(currentSlide, {
-          autoAlpha: 0,
-          y: -6,
-          duration: PROMO_CAROUSEL.fadeDuration,
-        })
-        .fromTo(
-          nextSlide,
-          { autoAlpha: 0, y: 8 },
-          { autoAlpha: 1, y: 0, duration: PROMO_CAROUSEL.fadeDuration, ease: 'power2.out' },
-          0.12
-        )
-        .call(() => {
+    promoCarouselTween = gsap
+      .timeline({
+        defaults: { ease: 'power2.inOut' },
+        onComplete: () => {
           currentSlide.classList.remove('is-active');
           nextSlide.classList.add('is-active');
-        });
-    };
+          index = nextIndex;
+        },
+      })
+      .to(currentSlide, {
+        autoAlpha: 0,
+        y: -6,
+        duration: PROMO_CAROUSEL.fadeDuration,
+      })
+      .fromTo(
+        nextSlide,
+        { autoAlpha: 0, y: 8 },
+        { autoAlpha: 1, y: 0, duration: PROMO_CAROUSEL.fadeDuration, ease: 'power2.out' },
+        0.12
+      );
+  };
 
-    promoCarouselTimer = window.setInterval(rotate, PROMO_CAROUSEL.intervalMs);
-  }, banner);
+  promoCarouselTimer = window.setInterval(rotate, PROMO_CAROUSEL.intervalMs);
 }
 
 function initRichMotion() {
-  promoMotionCtx = initPromoCarousel();
-
   /* ---- Page enter: promo + header ---- */
   gsap.from('.promo-banner', {
     y: -40,
@@ -623,6 +629,6 @@ window.addEventListener('pagehide', () => {
     window.clearInterval(promoCarouselTimer);
     promoCarouselTimer = null;
   }
-  promoMotionCtx?.revert();
+  promoCarouselTween?.kill();
   heroMotionCtx?.revert();
 });
