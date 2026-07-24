@@ -7,6 +7,7 @@ const outRoot = path.resolve('assets-optimized');
 
 /** @type {{ file: string; maxWidth: number; quality?: number; png?: boolean }[]} */
 const rules = [
+  { file: 'brand/menace-logo.png', maxWidth: 877, png: true },
   { file: 'brand/aces-logo.png', maxWidth: 816, png: true },
   { file: 'hero/shop-2.jpg', maxWidth: 1200, quality: 82 },
   { file: 'hero/shop-1.jpg', maxWidth: 1200, quality: 82 },
@@ -67,6 +68,11 @@ async function optimizeOne(relPath, rule) {
       .jpeg({ quality: rule.quality ?? 82, mozjpeg: true, progressive: true })
       .toFile(output);
   }
+
+  const webpOutput = output.replace(/\.(jpe?g|png)$/i, '.webp');
+  await sharp(output)
+    .webp({ quality: rule.quality ?? 82, effort: 6 })
+    .toFile(webpOutput);
 
   const after = fs.statSync(output).size;
   const outMeta = await sharp(output).metadata();

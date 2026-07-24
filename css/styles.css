@@ -662,6 +662,10 @@ address {
   max-width: min(88vw, 22rem);
 }
 
+.hero-title picture {
+  display: block;
+}
+
 .hero-logo {
   display: block;
   width: 100%;

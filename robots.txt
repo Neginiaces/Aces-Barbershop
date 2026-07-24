@@ -1,4 +1,8 @@
+# Aces Barbershop by Menace — Keswick, Ontario
 User-agent: *
 Allow: /
+
+# Internal build output (not for indexing)
+Disallow: /assets-optimized/
 
 Sitemap: https://acesbarbershopbymenace.ca/sitemap.xml
