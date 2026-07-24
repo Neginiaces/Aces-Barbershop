@@ -262,17 +262,18 @@ function initRichMotion() {
     });
   }
 
-  /* ---- Hero background (Motion) ---- */
-  const heroBg = document.querySelector('.hero-bg');
-  if (heroBg) {
+  /* ---- Hero logo (Motion) ---- */
+  const heroLogo = document.querySelector('.hero-logo');
+  if (heroLogo) {
     animate(
-      heroBg,
+      heroLogo,
       {
         opacity: [0, 1],
-        scale: [1.06, 1],
-        filter: ['blur(8px)', 'blur(0px)'],
+        scale: [0.9, 1],
+        y: [28, 0],
+        filter: ['blur(10px)', 'blur(0px)'],
       },
-      { duration: 1.25, easing: easeOut, delay: 0.08 }
+      { duration: 1.25, easing: easeOut, delay: 0.1 }
     );
   }
 
