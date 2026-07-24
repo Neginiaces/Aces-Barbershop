@@ -13,17 +13,9 @@ gsap.registerPlugin(ScrollTrigger);
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const easeOut = [0.16, 1, 0.3, 1];
 
-/** Edit promo carousel timing here (messages are in index.html + contact.html). */
-const PROMO_CAROUSEL = {
-  intervalMs: 5000,
-  fadeDuration: 0.6,
-};
-
 document.documentElement.classList.add('js-ready');
 
 let heroMotionCtx = null;
-let promoCarouselTween = null;
-let promoCarouselTimer = null;
 
 function revealHeroCaption() {
   document.querySelectorAll('[data-hero-animate], .hero-heading, .hero-subtitle, .hero-actions .btn').forEach((el) => {
@@ -241,14 +233,12 @@ if (contactForm) {
    ------------------------------------------------------------------ */
 if (prefersReducedMotion) {
   revealHeroCaption();
-  initPromoCarousel();
   document.querySelectorAll('.hero-animate, .reveal').forEach((el) => {
     el.style.opacity = '1';
     el.style.transform = 'none';
     el.style.filter = 'none';
   });
 } else {
-  initPromoCarousel();
   try {
     initRichMotion();
   } catch (error) {
@@ -287,76 +277,10 @@ function initHeroEntrance() {
   }, hero);
 }
 
-function initPromoCarousel() {
-  const banner = document.querySelector('.promo-banner');
-  if (!banner) return;
-
-  const slides = [...banner.querySelectorAll('.promo-banner__slide')];
-  if (!slides.length) return;
-
-  if (promoCarouselTimer) {
-    window.clearInterval(promoCarouselTimer);
-    promoCarouselTimer = null;
-  }
-  promoCarouselTween?.kill();
-  promoCarouselTween = null;
-
-  slides.forEach((slide) => {
-    slide.style.removeProperty('opacity');
-    slide.style.removeProperty('visibility');
-    slide.style.removeProperty('transform');
-  });
-
-  if (prefersReducedMotion || slides.length < 2) {
-    slides.forEach((slide, i) => {
-      slide.classList.toggle('is-active', i === 0);
-    });
-    return;
-  }
-
-  let index = slides.findIndex((slide) => slide.classList.contains('is-active'));
-  if (index < 0) index = 0;
-
-  slides.forEach((slide, i) => {
-    slide.classList.toggle('is-active', i === index);
-    gsap.set(slide, { autoAlpha: i === index ? 1 : 0, y: i === index ? 0 : 8 });
-  });
-
-  const rotate = () => {
-    const currentSlide = slides[index];
-    const nextIndex = (index + 1) % slides.length;
-    const nextSlide = slides[nextIndex];
-
-    promoCarouselTween = gsap
-      .timeline({
-        defaults: { ease: 'power2.inOut' },
-        onComplete: () => {
-          currentSlide.classList.remove('is-active');
-          nextSlide.classList.add('is-active');
-          index = nextIndex;
-        },
-      })
-      .to(currentSlide, {
-        autoAlpha: 0,
-        y: -6,
-        duration: PROMO_CAROUSEL.fadeDuration,
-      })
-      .fromTo(
-        nextSlide,
-        { autoAlpha: 0, y: 8 },
-        { autoAlpha: 1, y: 0, duration: PROMO_CAROUSEL.fadeDuration, ease: 'power2.out' },
-        0.12
-      );
-  };
-
-  promoCarouselTimer = window.setInterval(rotate, PROMO_CAROUSEL.intervalMs);
-}
-
 function initRichMotion() {
   /* ---- Page enter: promo + header ---- */
   gsap.from('.promo-banner', {
     y: -40,
-    opacity: 0,
     duration: 0.85,
     ease: 'power3.out',
   });
@@ -625,10 +549,5 @@ function initRichMotion() {
 }
 
 window.addEventListener('pagehide', () => {
-  if (promoCarouselTimer) {
-    window.clearInterval(promoCarouselTimer);
-    promoCarouselTimer = null;
-  }
-  promoCarouselTween?.kill();
   heroMotionCtx?.revert();
 });
