@@ -84,7 +84,8 @@ html {
     transition-duration: 0.01ms !important;
   }
 
-  .hero-animate {
+  .hero-animate,
+  .hero-caption-animate {
     opacity: 1 !important;
     transform: none !important;
     filter: none !important;
@@ -697,7 +698,6 @@ address {
   font-weight: 400;
   color: var(--army) !important;
   line-height: 1.45;
-  opacity: 1;
 }
 
 .hero-brand .hero-memorial span {
@@ -729,6 +729,12 @@ address {
 }
 
 /* Motion + GSAP take over once JS is ready */
+.js-ready .hero-logo.hero-caption-animate,
+.js-ready .hero-brand .hero-memorial.hero-caption-animate,
+.js-ready .hero-actions .hero-caption-animate {
+  opacity: 0;
+}
+
 .hero-animate {
   opacity: 0;
 }

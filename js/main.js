@@ -17,7 +17,7 @@ document.documentElement.classList.add('js-ready');
 
 /* Failsafe: never leave hero/content invisible if CDN/modules fail */
 window.setTimeout(() => {
-  document.querySelectorAll('.hero-animate').forEach((el) => {
+  document.querySelectorAll('.hero-animate, .hero-caption-animate').forEach((el) => {
     if (getComputedStyle(el).opacity === '0') {
       el.style.opacity = '1';
       el.style.transform = 'none';
@@ -225,7 +225,7 @@ if (contactForm) {
    Reduced motion: show everything, skip cinematic motion
    ------------------------------------------------------------------ */
 if (prefersReducedMotion) {
-  document.querySelectorAll('.hero-animate, .reveal').forEach((el) => {
+  document.querySelectorAll('.hero-animate, .hero-caption-animate, .reveal').forEach((el) => {
     el.style.opacity = '1';
     el.style.transform = 'none';
     el.style.filter = 'none';
@@ -235,9 +235,8 @@ if (prefersReducedMotion) {
 }
 
 function initRichMotion() {
-  document.querySelectorAll('.hero-animate').forEach((el) => {
+  document.querySelectorAll('.hero-caption-animate').forEach((el) => {
     el.style.animation = 'none';
-    el.style.opacity = '0';
   });
 
   /* ---- Page enter: promo + header ---- */
@@ -262,36 +261,42 @@ function initRichMotion() {
     });
   }
 
-  /* ---- Hero logo ---- */
-  const logo = document.querySelector('.hero-logo');
-  if (logo && !prefersReducedMotion) {
-    gsap.from(logo, {
-      scale: 0.96,
-      y: 14,
-      duration: 0.95,
-      delay: 0.08,
-      ease: 'power2.out',
-    });
-  }
+  /* ---- Hero caption: logo → memorial → CTAs ---- */
+  const heroLogo = document.querySelector('.hero-logo');
+  const heroMemorial = document.querySelector('.hero-memorial');
+  const heroBtns = document.querySelectorAll('.hero-actions .btn');
 
-  const memorial = document.querySelector('.hero-memorial');
-  if (memorial && !prefersReducedMotion) {
-    gsap.from(memorial, {
-      opacity: 0,
-      y: 10,
-      duration: 0.8,
-      delay: 0.35,
-      ease: 'power2.out',
+  if (heroLogo || heroMemorial || heroBtns.length) {
+    const heroCaption = gsap.timeline({
+      defaults: { ease: 'power2.out' },
     });
-  }
 
-  const actions = document.querySelector('.hero-actions');
-  if (actions) {
-    animate(
-      actions,
-      { opacity: [0, 1], y: [14, 0] },
-      { duration: 0.55, easing: easeOut, delay: 0.35 }
-    );
+    if (heroLogo) {
+      heroCaption.fromTo(
+        heroLogo,
+        { opacity: 0, y: 22 },
+        { opacity: 1, y: 0, duration: 1 },
+        0.12
+      );
+    }
+
+    if (heroMemorial) {
+      heroCaption.fromTo(
+        heroMemorial,
+        { opacity: 0, y: 16 },
+        { opacity: 1, y: 0, duration: 0.95 },
+        0.42
+      );
+    }
+
+    if (heroBtns.length) {
+      heroCaption.fromTo(
+        heroBtns,
+        { opacity: 0, y: 14 },
+        { opacity: 1, y: 0, duration: 0.85, stagger: 0.1 },
+        0.72
+      );
+    }
   }
 
   /* ---- Section headers ---- */
