@@ -277,6 +277,15 @@ function initRichMotion() {
     );
   }
 
+  const memorial = document.querySelector('.memorial');
+  if (memorial) {
+    animate(
+      memorial,
+      { opacity: [0, 1], y: [12, 0] },
+      { duration: 0.7, easing: easeOut, delay: 0.28 }
+    );
+  }
+
   const actions = document.querySelector('.hero-actions');
   if (actions) {
     animate(
@@ -284,18 +293,6 @@ function initRichMotion() {
       { opacity: [0, 1], y: [14, 0] },
       { duration: 0.55, easing: easeOut, delay: 0.35 }
     );
-  }
-
-  /* ---- Memorial ---- */
-  const memorial = document.querySelector('.memorial');
-  if (memorial) {
-    gsap.from(memorial, {
-      scrollTrigger: { trigger: memorial, start: 'top 90%', once: true },
-      opacity: 0,
-      y: 36,
-      duration: 1.1,
-      ease: 'power3.out',
-    });
   }
 
   /* ---- Section headers ---- */

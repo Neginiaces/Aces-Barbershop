@@ -729,18 +729,18 @@ address {
 
 /* Memorial */
 .memorial {
+  margin: 0 auto 1.75rem;
+  max-width: 28rem;
   text-align: center;
-  padding: clamp(2rem, 5vw, 3rem) var(--space-sm);
-  background: var(--army);
   font-family: var(--font-script);
-  font-size: clamp(1.85rem, 5vw, 2.75rem);
+  font-size: clamp(1.35rem, 3.8vw, 1.85rem);
   font-weight: 400;
-  color: #fff;
+  color: var(--army);
   line-height: 1.35;
 }
 
 .memorial span {
-  color: #fff;
+  color: var(--army-dark);
 }
 
 /* Stats */
