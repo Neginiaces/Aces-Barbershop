@@ -145,8 +145,34 @@
   <header class="site-header" role="banner">
     <div class="container header-inner">
       <a href="/" class="logo" aria-label="Aces Barbershop — Home">
+        <span class="barber-pole" aria-hidden="true">
+          <svg class="barber-pole__svg" viewBox="0 0 11 34" xmlns="http://www.w3.org/2000/svg" focusable="false">
+            <defs>
+              <linearGradient id="barber-pole-cap" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="var(--gold-light)" />
+                <stop offset="48%" stop-color="var(--gold)" />
+                <stop offset="100%" stop-color="var(--gold-dark)" />
+              </linearGradient>
+              <pattern id="barber-pole-stripes" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+                <rect width="3" height="6" fill="var(--army)" />
+                <rect x="3" width="3" height="6" fill="var(--white)" />
+              </pattern>
+              <clipPath id="barber-pole-shaft-clip">
+                <rect x="2" y="4.5" width="7" height="25" rx="0.75" />
+              </clipPath>
+            </defs>
+            <ellipse cx="5.5" cy="2.25" rx="4.75" ry="1.75" fill="url(#barber-pole-cap)" />
+            <rect x="1.5" y="3.25" width="8" height="1.25" rx="0.5" fill="url(#barber-pole-cap)" opacity="0.92" />
+            <g clip-path="url(#barber-pole-shaft-clip)">
+              <rect class="barber-pole__stripes" x="0" y="4" width="11" height="38" fill="url(#barber-pole-stripes)" />
+            </g>
+            <rect x="2.5" y="5.5" width="0.75" height="23" rx="0.375" fill="var(--white)" opacity="0.14" />
+            <rect x="1.5" y="29.5" width="8" height="1.25" rx="0.5" fill="url(#barber-pole-cap)" opacity="0.92" />
+            <ellipse cx="5.5" cy="31.75" rx="4.75" ry="1.75" fill="url(#barber-pole-cap)" />
+          </svg>
+        </span>
         <span class="logo-ace">Aces</span>
-        <span class="logo-sub">Barbershop by Menace</span>
+        <span class="logo-sub">Barbershop</span>
       </a>
 
       <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav" aria-label="Toggle navigation menu">
