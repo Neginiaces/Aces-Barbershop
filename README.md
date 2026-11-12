@@ -25,7 +25,7 @@ Open http://localhost:8080
 
 | Barber  | Setmore |
 |---------|---------|
-| AR      | https://aracesbymenace.setmore.com/ |
+| AR      | https://arthemenace.setmore.com/ |
 | Negini  | https://neginiaces.setmore.com/negini |
 | Anthony | https://antaces.setmore.com/ |
 | Saif    | https://1acesbarbershopsaifblendz.setmore.com/ |
